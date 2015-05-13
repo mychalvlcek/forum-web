@@ -1,0 +1,53 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+    <!-- #posts -->
+    <div class="tab-pane fade" id="posts">
+        <ui:fragment rendered="#{empty profile.posts}">
+            <p class="lead muted">Nebyly nalezeny žádné příspěvky.</p>
+        </ui:fragment>
+        <ui:fragment rendered="#{not empty profile.posts}">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>#{msgs['page.profile.tabs.last_posts.title']}</th>
+                        <th>#{msgs['page.profile.tabs.last_posts.time']}</th>
+                        <th>#{msgs['page.profile.tabs.last_posts.topic']}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ui:repeat value="#{profile.posts}" var="post">
+                    <tr>
+                        <td>#{post.id}</td>
+                        <td><h:link outcome="topic.xhtml?id=#{post.topic.id}" value="#{post.title}" /></td>
+                        <td>
+                            <h:outputText value="#{post.updated}" >
+                                <f:convertDateTime pattern="dd.MM. yyyy, HH:mm" />
+                            </h:outputText>
+                        </td>
+                        <td><h:link outcome="topic.xhtml?id=#{post.topic.id}" value="#{post.topic.title}" /></td>
+                    </tr>
+                    </ui:repeat>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <ul>
+                    <li><a href="#">Prev</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">Next</a></li>
+                </ul>
+            </div>
+        </ui:fragment>
+    </div>
+    <!-- end #posts -->
+</ui:composition>

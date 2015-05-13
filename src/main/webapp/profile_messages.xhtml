@@ -1,0 +1,49 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:c="http://java.sun.com/jsp/jstl/core"
+    xmlns:sec="http://www.springframework.org/security/facelets/tags">
+
+    <!-- #messages -->
+    <div class="tab-pane fade" id="messages">
+        <ui:fragment rendered="#{empty profile.messages}">
+            <p class="lead muted">Nebyly nalezeny žádné zprávy.</p>
+        </ui:fragment>
+        <ui:fragment rendered="#{not empty profile.messages}">
+            <div class="accordion" id="accordion2">
+                <ui:repeat value="#{profile.messages}" var="msg">
+                <div class="accordion-group message-block">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" rel="tooltip" title="#{msg.created}" data-placement="left" data-toggle="collapse" data-parent="#accordion2" href="##{msg.id}">
+                            <h:outputText styleClass="muted" value="#{msg.created}" >
+                                <f:convertDateTime pattern="dd.MM. yyyy, HH:mm" />
+                            </h:outputText>
+                            #{msg.title} <h:outputText styleClass="muted" value=" - #{msg.author.userName}" />
+                        </a>
+                    </div>
+                    <div id="#{msg.id}" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            #{msg.content}
+                        </div>
+                    </div>
+                </div>
+                </ui:repeat>
+            </div>
+            
+            <div class="pagination">
+                <ul>
+                    <li><a href="#">Prev</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">Next</a></li>
+                </ul>
+            </div>
+        </ui:fragment>
+    </div>
+    <!-- end #posts -->
+</ui:composition>

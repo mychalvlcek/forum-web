@@ -1,0 +1,231 @@
+/* content blocks */
+.type-block {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    height: 100%;
+    padding: 17px 7px 0px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: black;
+    -webkit-border-radius: 4px 0 4px 0;
+    -moz-border-radius: 4px 0 4px 0;
+    border-radius: 4px 0 4px 0;
+}
+.type-block .type {
+    font-size: 20px;
+    font-weight: 200;
+}
+#new-post {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-left: 5px solid #ddd;
+    border-right: 5px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+}
+#post:target {
+    background: aliceblue;
+    -webkit-transition: background .8s ease-in-out;
+    -moz-transition: background .8s ease-in-out;
+    -ms-transition: background .8s ease-in-out;
+    -o-transition: background .8s ease-in-out;
+    transition: background .8s ease-in-out;
+}
+.label-block {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: black;
+    -webkit-border-radius: 4px 0 4px 0;
+    -moz-border-radius: 4px 0 4px 0;
+    border-radius: 4px 0 4px 0;
+}
+.username {
+    padding-right: 10px;
+    color: black;
+}
+.username:hover {
+    color: black;
+}
+.posted {
+    border-left: 1px solid #ddd;
+    padding: 3px 17px;
+    font-size: 12px;
+    font-weight: 300;
+    color: black;
+}
+/* index.xhtml - category */
+.category-block {
+    position: relative;
+    margin: 15px 0;
+    padding: 15px 40px 10px;
+    background-color: #fdfefe;
+    border: 2px solid #ddd;
+    border-left: 5px solid #ddd;
+    border-right: 5px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.category-block h4.media-heading {
+    float: left;
+}
+/* category.xhtml - topic */
+.topic-block {
+    position: relative;
+    margin: 5px 0;
+    padding: 15px 40px 10px;
+    background-color: #fdfefe;
+    border: 1px solid #ddd;
+    border-left: 5px solid #ddd;
+    border-right: 5px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.topic-block .topic-info {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    height: 100%;
+    width: 180px;
+    padding: 7px 7px 0px;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    color: black;
+    -webkit-border-radius: 0px 0 4px 0;
+    -moz-border-radius: 0px 0 4px 0;
+    border-radius: 0px 0 4px 0;
+}
+.topic-block .topic-info span {
+    float: right;
+}
+.topic-block .topic-info .last-post-username {
+    color: black;
+}
+.topic-block .media-heading {
+    float: left;
+    margin-right: 10px;
+}
+.topic-block .replies {
+    margin-right: 180px;
+}
+/* topic.xhtml - post */
+.post-block {
+    position: relative;
+    margin: 15px 0;
+    padding :39px 10px 10px;
+    background-color: #fdfefe;
+    border: 1px solid #ddd;
+    border-left: 5px solid #ddd;
+    border-right: 5px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.post-block .admin-block {
+    margin: 0;
+}
+.post-block .actions {
+    margin-top:-30px;
+}
+.post-block span.status {
+    margin: 2px;
+}
+.post-block .media-body {
+    padding-left: 20px;
+    border-left: 5px solid #eee;
+}
+.new-message textarea {
+    width:520px;
+    height:150px;
+}
+/* profile.xhtml - profile */
+.profile .profile-username {
+    margin-top:0px;
+    font-size:1.5em;
+}
+.profile ul.info {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.profile ul.info li {
+    font-weight:bold;
+}
+.profile ul.info li span.muted {
+    font-weight:200;
+}
+.profile .img-polaroid {
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=);
+}
+
+.profile .message-block {
+    background: #fdfdfd;
+}
+.profile .message-block:hover {
+    background: #fcfcfc;
+}
+.profile .message-block .accordion-toggle span.muted {
+    margin-right: 20px;
+}
+.profile .message-block .accordion-toggle:hover {
+    text-decoration: none;
+}
+/* ALERTS */
+.alert ul {
+    list-style-type: none;
+    margin: 0;
+}
+/* FOOTER */
+html,
+body {
+  height: 100%;
+  /* The html and body elements cannot have any padding or margin. */
+}
+#wrap > .container {
+    padding-top: 60px;
+}
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -160px;
+}
+/* Set the fixed height of the footer here */
+#push,
+#footer {
+  height: 160px;
+  padding: 20px 0;
+}
+#footer {
+  background-color: #f5f5f5;
+}
+.container .credit {
+  margin: 20px 0;
+}
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+  #footer {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

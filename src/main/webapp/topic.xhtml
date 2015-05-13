@@ -1,0 +1,175 @@
+<ui:composition template="_template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:sec="http://www.springframework.org/security/facelets/tags">
+    <!-- nacteni id z URL a init kategorie -->
+    <f:metadata>
+        <f:viewParam name="id" value="#{topic.topicId}" />
+        <f:event listener="#{topic.init}" type="preRenderView"/>
+    </f:metadata>
+
+    <ui:define name="title">[T] #{topic.topic.title}</ui:define>
+    <ui:define name="content">
+        <!-- topic title -->
+        <h1>#{topic.topic.title}</h1>
+        <!-- bread nav -->
+        <ul class="breadcrumb">
+            <li><a href="/wpa-forum/">wpaforum</a> <span class="divider">/</span></li>
+            <li>
+                <h:link outcome="category.xhtml" value="#{topic.category.title}">
+                    <f:param name="id" value="#{topic.category.id}" />
+                </h:link>
+                <span class="divider">/</span>
+            </li>
+            <li class="active">#{topic.topic.title}</li>
+        </ul>
+        <!-- nav -->
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <h:outputLink value="category.xhtml" styleClass="btn">
+                    <i class="icon-arrow-left"></i>
+                    <f:param name="id" value="#{topic.category.id}" />
+                    <h:outputText value="Zpět k výpisu témat" />
+                </h:outputLink>
+                <sec:isAuthenticated>
+                    <a href="#reply" class="btn"><i class="icon-share-alt"></i> Odpovědět</a>
+                </sec:isAuthenticated>
+            </div>
+            <div class="btn-group pull-right">
+              <button class="btn" rel="tooltip" title="Přejít na stranu: 1">1</button>
+              <button class="btn" rel="tooltip" title="Přejít na stranu: 2">2</button>
+              <button class="btn" rel="tooltip" title="Přejít na stranu: 3">3</button>
+            </div>
+        </div>
+        <hr />
+        <ui:fragment rendered="#{empty topic.posts}">
+            <p class="lead muted">Nebyly nalezeny žádné příspěvky pro toto téma.</p>
+        </ui:fragment>
+        <!-- post -->
+        <ui:repeat value="#{topic.posts}" var="post">
+            <!-- anchor -->
+            <a name="#{post.id}"></a>
+            <div class="media post-block" id="post">
+                <!-- akce -->
+                <sec:isAuthenticated>
+                    <h:form styleClass="admin-block" rendered="#{loggedUser.id() == post.author.id || loggedUser.id() == 3}">
+                        <div class="btn-group pull-right actions">
+                            <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Akce <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <h:outputLink value="post_edit.xhtml">
+                                        <f:param name="id" value="#{post.id}" />
+                                        <h:outputText value="Upravit" />
+                                    </h:outputLink>
+                                </li>
+                                <li><h:commandLink value="Smazat" actionListener="#{topic.deletePost(post.id)}"/></li>
+                            </ul>
+                        </div>
+                    </h:form>
+                </sec:isAuthenticated>
+                <div class="label-block">
+                    <h:outputLink value="/wpa-forum/profile.xhtml" title="#{post.author.userName}'s profile" styleClass="username">
+                        <f:param name="id" value="#{post.author.id}" />
+                        <i class="icon-user"></i><h:outputText value=" #{post.author.userName}" />
+                    </h:outputLink>
+                    <span class="posted">
+                        <em>
+                            <h:outputText value="#{post.created}" >
+                                <f:convertDateTime pattern="dd.MM. yyyy, HH:mm" />
+                            </h:outputText>
+                            <!-- naposledy upraveno -->
+                            <ui:fragment rendered="#{post.created != post.updated}">
+                                upraveno
+                                <h:outputText value="#{post.updated}" >
+                                    <f:convertDateTime pattern="dd.MM. yyyy, HH:mm" />
+                                </h:outputText>
+                            </ui:fragment>
+                        </em>
+                    </span>
+                </div>
+                <div class="pull-left">
+                    <h:outputLink value="/wpa-forum/profile.xhtml" title="#{post.author.userName}'s profile">
+                        <f:param name="id" value="#{post.author.id}" />
+                        <h:graphicImage class="media-object img-rounded" width="64" url="/resources/img/#{post.author.id}.jpg" alt="vlcekmi3's avatar" />
+                    </h:outputLink>
+                    <span class="label label-success status">ON-LINE</span><br />
+                    <sec:isAuthenticated>
+                        <a href="#myModal" data-toggle="modal" data-target="#myModal" rel="tooltip" title="Nová zpráva" data-placement="right"><i class="icon-envelope"></i></a>
+                    </sec:isAuthenticated>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">#{post.title}</h4>
+                    <p><h:outputText escape="false" value="#{post.content}" /></p>
+                </div>
+            </div>
+        </ui:repeat>
+        <!-- end post -->
+        <sec:isAuthenticated>
+        <!-- new message - Modal -->
+        <div id="myModal" class="modal hide fade new-message" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Nová zpráva</h3>
+            </div>
+            <div class="modal-body">
+                <textarea></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+                <button class="btn btn-primary">Odeslat</button>
+            </div>
+        </div>
+    
+        <!-- new post -->
+        <a name="reply"></a>
+        <h4>Nový příspěvek</h4>
+        <h:form>
+        <div class="media post-block" id="new-post">
+            <div class="label-block">
+                <h:outputLink value="/wpa-forum/profile.xhtml" title="#{loggedUser.username()}'s profile" styleClass="username">
+                    <f:param name="id" value="#{loggedUser.id()}" />
+                    <i class="icon-user"></i><h:outputText value=" #{loggedUser.username()}" />
+                </h:outputLink>
+            </div>
+            <div class="pull-left">
+                <h:outputLink value="/wpa-forum/profile.xhtml" title="#{loggedUser.username()}'s profile">
+                    <f:param name="id" value="#{loggedUser.id()}" />
+                    <h:graphicImage class="media-object img-rounded" width="64" url="/resources/img/#{loggedUser.id()}.jpg" alt="vlcekmi3's avatar" />
+                </h:outputLink>
+            </div>
+            <div class="media-body">
+                <h:form>
+                    <input type="hidden" name="topic" value="#{topic.topicId}" />
+                    <h:inputText id="title" value="#{topic.title}" styleClass="input-xlarge" />
+                    <p:editor id="editor" value="#{topic.content}" width="980" controls="bold italic underline strikethrough subscript superscript | bullets | undo redo | rule image link unlink | cut copy paste pastetext | source" />
+                </h:form>
+                <h:commandButton class="btn btn-primary" action="#{topic.storePost}" value="Odeslat"/>
+                <button type="reset" class="btn">Zrušit</button>
+            </div>
+        </div>
+        </h:form>
+        </sec:isAuthenticated>
+        <ui:fragment rendered="#{not empty topic.posts}">
+        <hr />
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <h:outputLink value="category.xhtml" styleClass="btn">
+                    <i class="icon-arrow-left"></i>
+                    <f:param name="id" value="#{topic.category.id}" />
+                    <h:outputText value="Zpět k výpisu témat" />
+                </h:outputLink>
+                <button class="btn" onclick="$(document).scrollTop(30);"><i class="icon-arrow-up"></i> Zpět nahoru</button>
+            </div>
+            <div class="btn-group pull-right">
+              <button class="btn">1</button>
+              <button class="btn">2</button>
+              <button class="btn">3</button>
+            </div>
+        </div>
+        </ui:fragment>
+    </ui:define>
+</ui:composition>

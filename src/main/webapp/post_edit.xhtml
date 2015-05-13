@@ -1,0 +1,49 @@
+<ui:composition template="_template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:sec="http://www.springframework.org/security/facelets/tags">
+    <!-- nacteni id z URL a init categorie -->
+    <f:metadata>
+        <f:viewParam name="id" value="#{newPost.id}" />
+        <f:event listener="#{newPost.init}" type="preRenderView"/>
+    </f:metadata>
+    
+    <ui:define name="title">Nové téma</ui:define>
+    <ui:define name="content">
+        <!-- new topic title -->
+        <h1>Editace příspěvku - #{newPost.title}</h1>
+        <!-- new topic -->
+        <!-- new post -->
+        <a name="reply"></a>
+        <sec:isAuthenticated>
+        <h:form>
+        <div class="media post-block" id="new-post">
+            <div class="label-block">
+                <h:outputLink value="/wpa-forum/profile.xhtml" title="#{newPost.post.author.userName}'s profile" styleClass="username">
+                    <f:param name="id" value="#{newPost.post.author.id}" />
+                    <i class="icon-user"></i><h:outputText value=" #{newPost.post.author.userName}" />
+                </h:outputLink>
+            </div>
+            <div class="pull-left">
+                <h:outputLink value="/wpa-forum/profile.xhtml" title="#{newPost.post.author.userName}'s profile">
+                    <f:param name="id" value="#{newPost.post.author.id}" />
+                    <h:graphicImage class="media-object img-rounded" width="64" url="/resources/img/#{newPost.post.author.id}.jpg" alt="#{newPost.post.author.userName}'s avatar" />
+                </h:outputLink>
+            </div>
+            <div class="media-body">
+                <h:form>
+                    <h:inputText id="title" value="#{newPost.title}" styleClass="input-xlarge" />
+                    <p:editor id="editor" value="#{newPost.content}" width="980" controls="bold italic underline strikethrough subscript superscript | bullets | undo redo | rule image link unlink | cut copy paste pastetext | source" />
+                </h:form>
+                <h:commandButton class="btn btn-primary" action="#{newPost.storePost}" value="Odeslat"/>
+                <button type="reset" class="btn">Zrušit</button>
+            </div>
+        </div>
+        </h:form>
+        </sec:isAuthenticated>
+    </ui:define>
+</ui:composition>

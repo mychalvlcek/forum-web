@@ -1,0 +1,101 @@
+<ui:composition template="_template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                xmlns:sec="http://www.springframework.org/security/facelets/tags">
+    <f:metadata>
+        <f:viewParam name="id" value="#{category.id}" />
+        <f:event listener="#{category.init}" type="preRenderView"/>
+    </f:metadata>
+
+    <ui:define name="title">[C] #{category.category.title}</ui:define>
+    <ui:define name="content">
+        <!-- category title -->
+        <h1>#{category.category.title}</h1>
+        <!-- category desc -->
+        <p class="lead">Description of top-level category. Use this document as
+            a way to quick start any new project. All you get is this message
+            and a barebones HTML document. Description of top-level category.</p>
+        <!-- bread nav -->
+        <ul class="breadcrumb">
+            <li><a href="/wpa-forum/">wpaforum</a> <span class="divider">/</span></li>
+            <li class="active">#{category.category.title}</li>
+        </ul>
+        <!-- nav -->
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <a class="btn" href="/wpa-forum/"><i class="icon-arrow-left"></i> Zpět na seznam kategorií</a>
+                <sec:isAuthenticated>
+                    <h:outputLink value="topic_edit.xhtml" styleClass="btn">
+                        <i class="icon-plus"></i>
+                        <f:param name="id" value="#{category.category.id}" />
+                        <h:outputText value="Nové téma" />
+                    </h:outputLink>
+                </sec:isAuthenticated>
+            </div>
+            <div class="btn-group pull-right">
+              <button class="btn">1</button>
+              <button class="btn">2</button>
+              <button class="btn">3</button>
+            </div>
+        </div>
+        <hr />
+        <ui:fragment rendered="#{empty category.topics}">
+            <p class="lead muted no-records">Nebyla nalezena žádná témata pro tuto kategorii.</p>
+        </ui:fragment>
+        <!-- topic -->
+        <ui:repeat value="#{category.topics}" var="t">
+            <div class="media topic-block">
+                <div class="type-block">
+                    <span class="type"><i class="icon-list-alt"></i></span>
+                </div>
+                <div class="media-body">
+                    <!-- nazev -->
+                    <h4 class="media-heading">
+                        <h:outputLink value="/wpa-forum/topic.xhtml">
+                            <f:param name="id" value="#{t.id}" />
+                            <h:outputText value="#{t.title}" />
+                        </h:outputLink>
+                    </h4>
+                    <!-- info -->
+                    <div class="topic-info">
+                        <h:outputLink value="/wpa-forum/profile.xhtml" title="vlcekmi3's profile" styleClass="last-post-username">
+                            <f:param name="id" value="#{t.author}" />
+                            <h:graphicImage class="media-object img-rounded pull-right" width="35" url="/resources/img/#{t.author}.jpg" alt="#{t.user.userName}'s avatar" />
+                        </h:outputLink>
+                        <span rel="tooltip" title="Datum vytvoření" data-placement="left">
+                            <h:outputText value="#{t.updated}" >
+                                <f:convertDateTime pattern="dd.MM. yyyy, HH:mm" />
+                            </h:outputText>
+                        </span><br />
+                        <span>
+                            <h:outputLink value="/wpa-forum/profile.xhtml" title="vlcekmi3's profile" styleClass="last-post-username">
+                                <f:param name="id" value="#{t.author}" />
+                                <h:outputText value="#{t.user.userName}" />
+                            </h:outputLink>
+                        </span>
+                    </div>
+                    <span class="pull-right replies">#{t.postsCount} odpovědí</span>
+                </div>
+            </div>
+        </ui:repeat>
+        <!-- end topic -->
+        <ui:fragment rendered="#{not empty category.topics}">
+        <hr />
+        <div class="btn-toolbar">
+            <div class="btn-group">
+                <a class="btn" href="/wpa-forum/"><i class="icon-arrow-left"></i> Zpět na seznam kategorií</a>
+                <button class="btn" onclick="$(document).scrollTop(30);"><i class="icon-arrow-up"></i> Zpět nahoru</button>
+            </div>
+            <div class="btn-group pull-right">
+              <button class="btn">1</button>
+              <button class="btn">2</button>
+              <button class="btn">3</button>
+            </div>
+        </div>
+        </ui:fragment>
+    </ui:define>
+</ui:composition>

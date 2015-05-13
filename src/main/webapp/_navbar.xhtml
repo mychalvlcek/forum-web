@@ -1,0 +1,62 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <h:link class="brand" outcome="index" value="#{msgs['application.name']}" />
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li><a href="/wpa-forum/admin/">Admin</a></li>
+                        <!-- Webservices -->
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">WebService <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-header">Metody</li>
+                                <li><a href="/wpa-forum/jersey/jersey/hello">Hello</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!--<sec:isAnonymous>-->
+                        <form class="navbar-form pull-right" action="/wpa-forum/j_spring_security_check" method="post">
+                            <input class="span2" type="text" name="j_username" placeholder="#{msgs['navbar.username']}" />
+                            <input class="span2" type="password" name="j_password" placeholder="#{msgs['navbar.password']}" />
+                            <button type="submit" class="btn">#{msgs['navbar.login']}</button>
+                        </form>
+                        <ul class="nav pull-right">
+                            <li><h:link outcome="registration.xhtml" title="Registrační formulář" value="#{msgs['navbar.register']}"/></li>
+                        </ul>
+                    <!--</sec:isAnonymous>-->
+                    <!--<sec:isAuthenticated>-->
+                        <ul class="nav pull-right">
+                            <li class="divider-vertical"></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgs['navbar.logged_as']} #{loggedUser.username()} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <h:link outcome="profile" value="#{msgs['navbar.profile']}">
+                                            <f:param name="id" value="#{loggedUser.id()}" />
+                                        </h:link>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="/wpa-forum/j_spring_security_logout">#{msgs['navbar.logout']}</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="navbar-search pull-right" action="">
+                            <input type="text" class="search-query span2" placeholder="#{msgs['navbar.search']}" />
+                        </form>
+                    <!--</sec:isAuthenticated>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</ui:composition>
