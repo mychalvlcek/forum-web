@@ -29,7 +29,11 @@ import java.util.List;
 //import com.sun.jersey.api.client.GenericType;
 //import com.sun.jersey.api.client.ClientResponse;
 //import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.GenericType;
 import cz.cvut.forum.dto.CategoryDTO;
+import cz.cvut.forum.dto.UserDTO;
 
 @ManagedBean
 @ViewScoped
@@ -54,25 +58,27 @@ public class CategoryBean {
         this.category = category;
     }
 
-//    public void init() throws Exception {
-//        try {
-//            System.out.println("asd");
-////            category = categoryService.getCategoryById(id);
-//        } catch(Exception e) {
-//            throw new Exception("Kategorie s id: " + id + " nenalezena.");
-//        }
-//    }
+    public List<UserDTO> getTopics() {
+        return new ArrayList<UserDTO>();
+//        return Client.create().resource("http://localhost:8080/api/user/").get(new GenericType<List<UserDTO>>(){});
+    }
 
-//    private VoterClient voterClient;
-//    private PollClient pollClient;
-//    private List<PollDTO> pollDTOs;
-
-//    @ManagedProperty(value="#{voter}")
-//    LoggedVoter loggedVoter;
-
-    @PostConstruct
+//    @PostConstruct
     public void init() {
         System.out.println("init");
+        ClientResponse r = Client.create().resource("http://localhost:8080/api/category/" + id).get(ClientResponse.class);
+        System.out.println(r.getStatus());
+        category = r.getEntity(CategoryDTO.class);
+    }
+
+    public void create() {
+        CategoryDTO cat = new CategoryDTO();
+        cat.setTitle("xasdfZZZ");
+        Client.create().resource("http://localhost:8080/api/category/").post(cat);
+    }
+
+//        category = Client.create().resource("http://localhost:8080/api/category/1").get(CategoryDTO.class);
+//        Entity.entity(voter, MediaType.APPLICATION_JSON)
 //        category = Client.create().resource("http://localhost:8080/api/category/").path("" + id).accept("application/json").get(CategoryDTO.class);
 
 //        Client client = Client.create();
@@ -141,8 +147,6 @@ public class CategoryBean {
 //        } else {
 //            return new ArrayList<VoterDTO>();
 //        }
-
-    }
         //////
 
 

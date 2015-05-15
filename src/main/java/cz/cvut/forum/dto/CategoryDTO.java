@@ -1,10 +1,14 @@
 package cz.cvut.forum.dto;
 
+import javax.xml.bind.annotation.XmlTransient;
+import java.beans.Transient;
 import java.util.Date;
 import java.util.List;
 
 public class CategoryDTO extends AbstractDTO {
+
     private String title;
+    @XmlTransient
     private List<Long> topics;
 
     public CategoryDTO() {
@@ -35,6 +39,7 @@ public class CategoryDTO extends AbstractDTO {
         this.topics = topics;
     }
 
+    @XmlTransient
     public int getTopicsCount() {
         return this.topics.size();
     }

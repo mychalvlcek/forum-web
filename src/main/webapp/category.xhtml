@@ -21,7 +21,7 @@
         <!-- bread nav -->
         <ul class="breadcrumb">
             <li><a href="/">home</a> <span class="divider">/</span></li>
-            <li class="active">#{category.category.title}</li>
+            <li class="active">#{categoryBean   .category.title}</li>
         </ul>
         <!-- nav -->
         <div class="btn-toolbar">
@@ -42,11 +42,11 @@
             </div>
         </div>
         <hr />
-        <ui:fragment rendered="#{empty category.topics}">
+        <ui:fragment rendered="#{empty categoryBean.topics}">
             <p class="lead muted no-records">Nebyla nalezena žádná témata pro tuto kategorii.</p>
         </ui:fragment>
         <!-- topic -->
-        <ui:repeat value="#{category.topics}" var="t">
+        <ui:repeat value="#{categoryBean.topics}" var="t">
             <div class="media topic-block">
                 <div class="type-block">
                     <span class="type"><i class="icon-list-alt"></i></span>
