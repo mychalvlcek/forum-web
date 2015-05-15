@@ -4,8 +4,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:sec="http://www.springframework.org/security/facelets/tags">
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
     <!-- nacteni id z URL a init categorie -->
     <f:metadata>
         <f:viewParam name="id" value="#{newTopic.categoryId}" />
@@ -17,18 +16,18 @@
         <!-- new topic title -->
         <h1>Vytvoření nového tématu - #{newTopic.category.title}</h1>
         <!-- new topic -->
-        <sec:isAuthenticated>
+        <!--<sec:isAuthenticated>-->
         <h:form>
-        <h:outputLink value="/wpa-forum/category.xhtml">
+        <h:outputLink value="/category.xhtml">
             <f:param name="id" value="#{newTopic.categoryId}" />
             <h:outputText value="Zpět" />
         </h:outputLink>
         <div class="media post-block" id="new-post">
             <div class="label-block">
-                <a href="/wpa-forum/profile.xhtml" class="username"><i class="icon-user"></i> #{loggedUser.username()}</a>
+                <a href="/profile.xhtml" class="username"><i class="icon-user"></i> #{loggedUser.username()}</a>
             </div>
             <div class="pull-left">
-                <a href="/wpa-forum/profile.xhtml">
+                <a href="/profile.xhtml">
                     <h:graphicImage class="media-object img-rounded" width="64" url="http://en.gravatar.com/userimage/40148602/dc345e85f6dc02f97e5d1ad7e291a15f.jpg?size=160" alt="Alternate text" />
                 </a>
             </div>
@@ -43,6 +42,6 @@
             </div>
         </div>
         </h:form>
-        </sec:isAuthenticated>
+        <!--</sec:isAuthenticated>-->
     </ui:define>
 </ui:composition>

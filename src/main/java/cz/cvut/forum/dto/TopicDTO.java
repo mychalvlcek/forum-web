@@ -6,6 +6,8 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -13,8 +15,10 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 public class TopicDTO extends AbstractDTO {
     private String title;
     private Long author;
+    @XmlTransient
     private UserDTO user;
     private Long category;
+    @XmlTransient
     private List<Long> posts;
 
     public TopicDTO() {
@@ -80,7 +84,7 @@ public class TopicDTO extends AbstractDTO {
     public void setPosts(List<Long> posts) {
         this.posts = posts;
     }
-
+    @XmlTransient
     public int getPostsCount() {
         return this.posts.size();
     }
