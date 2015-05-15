@@ -4,37 +4,36 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:sec="http://www.springframework.org/security/facelets/tags">
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
     <f:metadata>
-        <f:viewParam name="id" value="#{category.id}" />
-        <f:event listener="#{category.init}" type="preRenderView"/>
+        <f:viewParam name="id" value="#{categoryBean.id}" />
+        <f:event listener="#{categoryBean.init}" type="preRenderView"/>
     </f:metadata>
 
-    <ui:define name="title">[C] #{category.category.title}</ui:define>
+    <ui:define name="title">[C] #{categoryBean.category.title}</ui:define>
     <ui:define name="content">
         <!-- category title -->
-        <h1>#{category.category.title}</h1>
+        <h1>#{categoryBean.category.title}</h1>
         <!-- category desc -->
         <p class="lead">Description of top-level category. Use this document as
             a way to quick start any new project. All you get is this message
             and a barebones HTML document. Description of top-level category.</p>
         <!-- bread nav -->
         <ul class="breadcrumb">
-            <li><a href="/wpa-forum/">wpaforum</a> <span class="divider">/</span></li>
+            <li><a href="/">home</a> <span class="divider">/</span></li>
             <li class="active">#{category.category.title}</li>
         </ul>
         <!-- nav -->
         <div class="btn-toolbar">
             <div class="btn-group">
-                <a class="btn" href="/wpa-forum/"><i class="icon-arrow-left"></i> Zpět na seznam kategorií</a>
-                <sec:isAuthenticated>
+                <a class="btn" href="/"><i class="icon-arrow-left"></i> Zpět na seznam kategorií</a>
+                <!--<sec:isAuthenticated>-->
                     <h:outputLink value="topic_edit.xhtml" styleClass="btn">
                         <i class="icon-plus"></i>
                         <f:param name="id" value="#{category.category.id}" />
                         <h:outputText value="Nové téma" />
                     </h:outputLink>
-                </sec:isAuthenticated>
+                <!--</sec:isAuthenticated>-->
             </div>
             <div class="btn-group pull-right">
               <button class="btn">1</button>

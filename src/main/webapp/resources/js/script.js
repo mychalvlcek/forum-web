@@ -87,7 +87,7 @@ $(document).ready(function () {
         e.preventDefault();
         var modalId = $(this).attr('data-target');
         $(modalId).modal('show');
-        get('/airline/rest' + $(this).attr('data-url'), $(modalId).find('form'));
+        get('/forum/rest' + $(this).attr('data-url'), $(modalId).find('form'));
 
     });
 
@@ -120,7 +120,7 @@ $(document).ready(function () {
 
     });
 
-	var wsUri = getRootUri() + "/airline/counter";
+	var wsUri = getRootUri() + "/forum/counter";
 
 	function getRootUri() {
 		return "ws://" + (document.location.hostname == "" ? "localhost" : document.location.hostname) + ":" +
@@ -159,10 +159,10 @@ function handleHashChange() {
             getAll('/rest/destination/', '#destinations', '#destination', ['id', 'name', 'lat', 'lon', 'url']);
             break;
         case 'flights':
-            getAll('/airline/rest/flight/', '#flights', '#flight', ['id', 'dateOfDeparture', 'name', 'from', 'to', 'distance', 'price', 'seats', 'url']);
+            getAll('/forum/rest/flight/', '#flights', '#flight', ['id', 'dateOfDeparture', 'name', 'from', 'to', 'distance', 'price', 'seats', 'url']);
             break;
         case 'reservations':
-            getAll('/airline/rest/reservation/', '#reservations', '#reservation', ['id', 'created', 'flight', 'password', 'seats', 'state', 'url']);
+            getAll('/forum/rest/reservation/', '#reservations', '#reservation', ['id', 'created', 'flight', 'password', 'seats', 'state', 'url']);
             break;
         default:
             break;
@@ -180,7 +180,7 @@ function create(data) {
     delete data.url;
 
     $.ajax({
-        url: '/airline/rest' + url,
+        url: '/forum/rest' + url,
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json',
@@ -209,7 +209,7 @@ function update(data) {
     delete data.url;
 
     $.ajax({
-        url: '/airline/rest' + url,
+        url: '/forum/rest' + url,
         type: 'PUT',
         dataType: 'json',
         contentType: 'application/json',
@@ -234,7 +234,7 @@ function update(data) {
  */
 function remove(url) {
     $.ajax({
-        url: '/airline/rest' + url,
+        url: '/forum/rest' + url,
         type: 'DELETE',
         dataType: 'json',
         success: function (response) {
@@ -259,7 +259,7 @@ function performAction(url, method, data, hdrs) {
     headers = hdrs || {};
 
     $.ajax({
-        url: '/airline/rest' + url,
+        url: '/forum/rest' + url,
         type: method,
         dataType: 'json',
         contentType: 'application/json',

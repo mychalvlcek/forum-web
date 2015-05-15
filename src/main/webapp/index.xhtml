@@ -12,7 +12,7 @@
             <h1><h:commandLink action="#{init.init}" value="Init databázových dat!" /></h1>
         </h:form>
         <!-- category -->
-        <ui:repeat value="#{categoryServiceImpl.allCategories}" var="cat">
+        <ui:repeat value="#{helloBean.getCategories()}" var="cat">
             <div class="media category-block">
                 <div class="type-block">
                     <span class="type" title="K seznamu témat"><i class="icon-list"></i></span>
