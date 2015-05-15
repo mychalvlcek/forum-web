@@ -14,6 +14,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +34,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import cz.cvut.forum.dto.CategoryDTO;
+import cz.cvut.forum.dto.TopicDTO;
 import cz.cvut.forum.dto.UserDTO;
 
 @ManagedBean
@@ -58,17 +60,20 @@ public class CategoryBean {
         this.category = category;
     }
 
-    public List<UserDTO> getTopics() {
-        return new ArrayList<UserDTO>();
-//        return Client.create().resource("http://localhost:8080/api/user/").get(new GenericType<List<UserDTO>>(){});
-    }
-
 //    @PostConstruct
     public void init() {
         System.out.println("init");
-        ClientResponse r = Client.create().resource("http://localhost:8080/api/category/" + id).get(ClientResponse.class);
+        ClientResponse r = Client.create()
+                .resource("http://localhost:8080/api/category/" + id)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(ClientResponse.class);
+
         System.out.println(r.getStatus());
         category = r.getEntity(CategoryDTO.class);
+    }
+
+    public List<TopicDTO> getTopics() {
+        return Client.create().resource("http://localhost:8080/api/topic/category/" + id).get(new GenericType<List<TopicDTO>>(){});
     }
 
     public void create() {

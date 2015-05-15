@@ -28,17 +28,17 @@
             <div class="btn-group">
                 <a class="btn" href="/"><i class="icon-arrow-left"></i> Zpět na seznam kategorií</a>
                 <!--<sec:isAuthenticated>-->
-                    <h:outputLink value="topic_edit.xhtml" styleClass="btn">
-                        <i class="icon-plus"></i>
-                        <f:param name="id" value="#{category.category.id}" />
-                        <h:outputText value="Nové téma" />
-                    </h:outputLink>
+                <h:outputLink value="topic_edit.xhtml" styleClass="btn">
+                    <i class="icon-plus"></i>
+                    <f:param name="id" value="#{category.category.id}" />
+                    <h:outputText value="Nové téma" />
+                </h:outputLink>
                 <!--</sec:isAuthenticated>-->
             </div>
             <div class="btn-group pull-right">
-              <button class="btn">1</button>
-              <button class="btn">2</button>
-              <button class="btn">3</button>
+                <button class="btn">1</button>
+                <button class="btn">2</button>
+                <button class="btn">3</button>
             </div>
         </div>
         <hr />
@@ -54,26 +54,26 @@
                 <div class="media-body">
                     <!-- nazev -->
                     <h4 class="media-heading">
-                        <h:outputLink value="/wpa-forum/topic.xhtml">
+                        <h:outputLink value="/topic.xhtml">
                             <f:param name="id" value="#{t.id}" />
                             <h:outputText value="#{t.title}" />
                         </h:outputLink>
                     </h4>
                     <!-- info -->
                     <div class="topic-info">
-                        <h:outputLink value="/wpa-forum/profile.xhtml" title="vlcekmi3's profile" styleClass="last-post-username">
+                        <h:outputLink value="/profile.xhtml" title="vlcekmi3's profile" styleClass="last-post-username">
                             <f:param name="id" value="#{t.author}" />
-                            <h:graphicImage class="media-object img-rounded pull-right" width="35" url="/resources/img/#{t.author}.jpg" alt="#{t.user.userName}'s avatar" />
+                            <h:graphicImage class="media-object img-rounded pull-right" width="35" url="/resources/images/avatar.jpg" alt="#{t.user.username}'s avatar" />
                         </h:outputLink>
                         <span rel="tooltip" title="Datum vytvoření" data-placement="left">
-                            <h:outputText value="#{t.updated}" >
+                            <h:outputText value="#{t.id}" >
                                 <f:convertDateTime pattern="dd.MM. yyyy, HH:mm" />
                             </h:outputText>
                         </span><br />
                         <span>
-                            <h:outputLink value="/wpa-forum/profile.xhtml" title="vlcekmi3's profile" styleClass="last-post-username">
+                            <h:outputLink value="/profile.xhtml" title="vlcekmi3's profile" styleClass="last-post-username">
                                 <f:param name="id" value="#{t.author}" />
-                                <h:outputText value="#{t.user.userName}" />
+                                <h:outputText value="#{t.user.username}" />
                             </h:outputLink>
                         </span>
                     </div>
@@ -83,18 +83,18 @@
         </ui:repeat>
         <!-- end topic -->
         <ui:fragment rendered="#{not empty category.topics}">
-        <hr />
-        <div class="btn-toolbar">
-            <div class="btn-group">
-                <a class="btn" href="/wpa-forum/"><i class="icon-arrow-left"></i> Zpět na seznam kategorií</a>
-                <button class="btn" onclick="$(document).scrollTop(30);"><i class="icon-arrow-up"></i> Zpět nahoru</button>
+            <hr />
+            <div class="btn-toolbar">
+                <div class="btn-group">
+                    <a class="btn" href="/"><i class="icon-arrow-left"></i> Zpět na seznam kategorií</a>
+                    <button class="btn" onclick="$(document).scrollTop(30);"><i class="icon-arrow-up"></i> Zpět nahoru</button>
+                </div>
+                <div class="btn-group pull-right">
+                    <button class="btn">1</button>
+                    <button class="btn">2</button>
+                    <button class="btn">3</button>
+                </div>
             </div>
-            <div class="btn-group pull-right">
-              <button class="btn">1</button>
-              <button class="btn">2</button>
-              <button class="btn">3</button>
-            </div>
-        </div>
         </ui:fragment>
     </ui:define>
 </ui:composition>
