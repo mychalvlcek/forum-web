@@ -4,8 +4,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:c="http://java.sun.com/jsp/jstl/core"
-                xmlns:sec="http://www.springframework.org/security/facelets/tags">
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
     <!-- nacteni id z URL a init categorie -->
     <f:metadata>
         <f:viewParam name="id" value="#{newPost.id}" />
@@ -19,19 +18,19 @@
         <!-- new topic -->
         <!-- new post -->
         <a name="reply"></a>
-        <sec:isAuthenticated>
+        <!--<sec:isAuthenticated>-->
         <h:form>
         <div class="media post-block" id="new-post">
             <div class="label-block">
-                <h:outputLink value="/wpa-forum/profile.xhtml" title="#{newPost.post.author.userName}'s profile" styleClass="username">
+                <h:outputLink value="/profile.xhtml" title="#{newPost.post.author.username}'s profile" styleClass="username">
                     <f:param name="id" value="#{newPost.post.author.id}" />
-                    <i class="icon-user"></i><h:outputText value=" #{newPost.post.author.userName}" />
+                    <i class="icon-user"></i><h:outputText value=" #{newPost.post.author.username}" />
                 </h:outputLink>
             </div>
             <div class="pull-left">
-                <h:outputLink value="/wpa-forum/profile.xhtml" title="#{newPost.post.author.userName}'s profile">
+                <h:outputLink value="/profile.xhtml" title="#{newPost.post.author.userName}'s profile">
                     <f:param name="id" value="#{newPost.post.author.id}" />
-                    <h:graphicImage class="media-object img-rounded" width="64" url="/resources/img/#{newPost.post.author.id}.jpg" alt="#{newPost.post.author.userName}'s avatar" />
+                    <h:graphicImage class="media-object img-rounded" width="64" url="/resources/images/avatar.jpg" alt="#{newPost.post.author.username}'s avatar" />
                 </h:outputLink>
             </div>
             <div class="media-body">
@@ -44,6 +43,6 @@
             </div>
         </div>
         </h:form>
-        </sec:isAuthenticated>
+        <!--</sec:isAuthenticated>-->
     </ui:define>
 </ui:composition>

@@ -5,6 +5,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import cz.cvut.forum.dto.CategoryDTO;
 import cz.cvut.forum.dto.TopicDTO;
+import cz.cvut.forum.helper.FacesUtil;
 import org.primefaces.context.RequestContext;
 //import cz.cvut.wpa.forum.helper.FacesUtil;
 //import cz.cvut.wpa.forum.service.CategoryService;
@@ -17,10 +18,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.MediaType;
 
-/**
- *
- * @author vlcekmi3
- */
 @ManagedBean
 @ViewScoped
 public class NewTopic {
@@ -38,19 +35,13 @@ public class NewTopic {
 //    protected CategoryService categoryService;
 
     public void init() throws Exception {
-//        try {
-//            category = categoryService.getCategoryById(categoryId);
-//        } catch(Exception e) {
-//            throw new Exception("Kategorie s id: " + categoryId + " nenalezena.");
-//        }
+        ClientResponse r = Client.create()
+                .resource("http://localhost:8080/api/category/" + categoryId)
+                .accept(MediaType.APPLICATION_JSON_TYPE)
+                .get(ClientResponse.class);
 
-//        ClientResponse r = Client.create()
-//                .resource("http://localhost:8080/api/category/" + id)
-//                .accept(MediaType.APPLICATION_JSON_TYPE)
-//                .get(ClientResponse.class);
-//
-//        System.out.println(r.getStatus());
-//        category = r.getEntity(CategoryDTO.class);
+        System.out.println(r.getStatus());
+        category = r.getEntity(CategoryDTO.class);
     }
 
     public void storeTopic() throws IOException {
@@ -68,6 +59,7 @@ public class NewTopic {
         rec.setCategory(categoryId);
         Client.create().resource("http://localhost:8080/api/topic/").post(rec);
 
+        FacesUtil.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Topic", "Byl úspěšně vložen."));
         FacesContext.getCurrentInstance().getExternalContext().redirect("/category.xhtml?id="+categoryId);
     }
 

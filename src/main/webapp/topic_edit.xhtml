@@ -33,12 +33,17 @@
             </div>
             <div class="media-body">
                 <h:form>
-                    <p>Title</p>
-                    <h:inputText id="title" value="#{newTopic.title}" styleClass="input-xlarge" />
+                    <div class="control-group#{!email.valid ?' error':''}">
+                        <h:outputLabel class="control-label" value="Title" for="email"/>
+                        <div class="controls">
+                            <h:inputText id="email" binding="#{email}" value="#{newTopic.title}" required="true" requiredMessage="Povinné">
+                            </h:inputText>
+                            <h:message for="email" styleClass="help-inline" />
+                        </div>
+                    </div>
                 </h:form>
                 <br />
                 <h:commandButton class="btn btn-primary" action="#{newTopic.storeTopic}" value="Odeslat"/>
-                <button type="button" class="btn">Zrušit</button>
             </div>
         </div>
         </h:form>
