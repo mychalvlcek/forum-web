@@ -7,11 +7,11 @@ public class PostDTO extends AbstractDTO {
     private String title;
     private String content;
 
-    private Long user;
+    private Long author;
     private Long topicId;
 
     @XmlTransient
-    private UserDTO author;
+    private UserDTO user;
     @XmlTransient
     private TopicDTO topic;
 
@@ -22,17 +22,17 @@ public class PostDTO extends AbstractDTO {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.author = author;
+        this.user = author;
         this.topic = topic;
 //        this.created = created;
 //        this.updated = updated;
     }
 
-    public Long getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(Long user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 
@@ -44,11 +44,11 @@ public class PostDTO extends AbstractDTO {
         this.topicId = topicId;
     }
 
-    public UserDTO getAuthor() {
+    public Long getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserDTO author) {
+    public void setAuthor(Long author) {
         this.author = author;
     }
 

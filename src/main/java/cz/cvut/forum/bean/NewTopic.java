@@ -1,22 +1,18 @@
 package cz.cvut.forum.bean;
 
-
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
 import cz.cvut.forum.dto.CategoryDTO;
 import cz.cvut.forum.dto.TopicDTO;
 import cz.cvut.forum.helper.FacesUtil;
-import org.primefaces.context.RequestContext;
-//import cz.cvut.wpa.forum.helper.FacesUtil;
-//import cz.cvut.wpa.forum.service.CategoryService;
-//import cz.cvut.wpa.forum.service.TopicService;
+import cz.cvut.forum.service.CategoryService;
+import cz.cvut.forum.service.CategoryServiceImpl;
+import cz.cvut.forum.service.TopicService;
+import cz.cvut.forum.service.TopicServiceImpl;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.ws.rs.core.MediaType;
 
 @ManagedBean
 @ViewScoped
@@ -27,21 +23,17 @@ public class NewTopic {
 
     private String title;
 
-//    @Autowired
-//    protected LoggedUser user;
-//    @Autowired
-//    protected TopicService topicService;
-//    @Autowired
-//    protected CategoryService categoryService;
+    private CategoryService categoryService;
+    private TopicService topicService;
+
+    @PostConstruct
+    public void postConstruct() {
+        this.categoryService = new CategoryServiceImpl();
+        this.topicService = new TopicServiceImpl();
+    }
 
     public void init() throws Exception {
-        ClientResponse r = Client.create()
-                .resource("http://localhost:8080/api/category/" + categoryId)
-                .accept(MediaType.APPLICATION_JSON_TYPE)
-                .get(ClientResponse.class);
-
-        System.out.println(r.getStatus());
-        category = r.getEntity(CategoryDTO.class);
+        category = categoryService.get(categoryId);
     }
 
     public void storeTopic() throws IOException {
@@ -57,7 +49,7 @@ public class NewTopic {
         rec.setTitle(title);
         rec.setAuthor(6L);
         rec.setCategory(categoryId);
-        Client.create().resource("http://localhost:8080/api/topic/").post(rec);
+        topicService.save(rec);
 
         FacesUtil.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Topic", "Byl úspěšně vložen."));
         FacesContext.getCurrentInstance().getExternalContext().redirect("/category.xhtml?id="+categoryId);

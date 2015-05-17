@@ -4,10 +4,12 @@ import cz.cvut.forum.dto.CategoryDTO;
 import cz.cvut.forum.dto.PostDTO;
 import cz.cvut.forum.dto.TopicDTO;
 import cz.cvut.forum.helper.FacesUtil;
+import cz.cvut.forum.service.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -23,44 +25,45 @@ public class Topic {
     private String title;
     private String content;
 
-//    @Autowired
-//    protected LoggedUser user;
-//    @Autowired
-//    protected CategoryService categoryService;
-//    @Autowired
-//    protected PostService postService;
-//    @Autowired
-//    protected TopicService topicService;
+    private CategoryService categoryService;
+    private TopicService topicService;
+    private PostService postService;
+
+    @PostConstruct
+    public void postConstruct() {
+        this.categoryService = new CategoryServiceImpl();
+        this.topicService = new TopicServiceImpl();
+        this.postService = new PostServiceImpl();
+    }
 
     public void init() throws Exception {
-        try {
-//            topic = topicService.getTopicById(topicId);
-        } catch(Exception e) {
-            throw new Exception("Tema s id: " + topicId + " nenalezeno.");
-        }
+        topic = topicService.get(topicId);
     }
 
     public void storePost() throws IOException {
         topicId = Long.parseLong(FacesUtil.getRequestParameter("topic"));
-//        postService.addPost(title, content, user.id(), topicId);
+        PostDTO post = new PostDTO();
+        post.setTitle(title);
+        post.setContent(content);
+        post.setAuthor(6L);
+        post.setTopicId(topicId);
+        postService.save(post);
         FacesUtil.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Topic", "Byl úspěšně vložen."));
         FacesContext.getCurrentInstance().getExternalContext().redirect("topic.xhtml?id=" + topicId + "&new=1");
     }
 
     public void deletePost(Long id) throws IOException {
-//        postService.deletePost(id);
+        postService.delete(id);
         FacesUtil.addMessage(new FacesMessage(FacesMessage.SEVERITY_INFO, "Příspěvek", "Byl smazán."));
         FacesContext.getCurrentInstance().getExternalContext().redirect("topic.xhtml?id=" + topicId + "&del=1");
     }
 
     public CategoryDTO getCategory() {
-        return new CategoryDTO();
-//        return categoryService.getCategoryById(topic.getCategory());
+        return categoryService.get(topic.getCategory());
     }
 
     public List<PostDTO> getPosts() {
-        return new ArrayList<PostDTO>();
-//        return postService.getPostsByTopic(topicId);
+        return postService.getByTopic(topicId);
     }
 
     public Long getTopicId() {
