@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import cz.cvut.forum.bean.LoggedUser;
+import cz.cvut.forum.dto.CategoryDTO;
+import cz.cvut.forum.service.*;
 import org.apache.commons.lang.SerializationUtils;
 
 import com.rabbitmq.client.AMQP.BasicProperties;
@@ -17,6 +20,7 @@ import javax.annotation.PreDestroy;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -32,9 +36,11 @@ public class CustomConsumer extends Endpoint implements Runnable, Consumer {
         super("queue");
     }
 
+    private CategoryService service;
+
     @PostConstruct
     public void init() {
-        System.out.println("init");
+        this.service = new CategoryServiceImpl();
         this.run();
     }
 
@@ -60,11 +66,13 @@ public class CustomConsumer extends Endpoint implements Runnable, Consumer {
     }
 
     public void handleDelivery(String consumerTag, Envelope env, BasicProperties props, byte[] body) throws IOException {
+        Long id = (Long) SerializationUtils.deserialize(body);
 
-        String message = (String) SerializationUtils.deserialize(body);
-        System.out.println(message);
+        CategoryDTO cat = service.get(id);
+
         EventBus eventBus = EventBusFactory.getDefault().eventBus();
-        eventBus.publish("/actions", message);
+//        eventBus.publish("/actions", message);
+        eventBus.publish("/actions", new FacesMessage("Vytvořena kategorie!", cat.getTitle()));
 
     }
 

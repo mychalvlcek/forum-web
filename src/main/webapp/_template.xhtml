@@ -29,11 +29,10 @@
 
         <script type="text/javascript">
             function handleMessage(data) {
+                data.severity = 'info';
+                PF('growl').renderMessage(data);
 
-//                PF('grolwl').renderMessage({"summary":data,
-//                    "detail":data,
-//                    "severity":"info"})
-                alert(data);
+//                PF('growl').renderMessage({"summary":data, "detail":data, "severity":"info"})
             }
         </script>
     </h:head>
