@@ -3,44 +3,48 @@
                     xmlns:h="http://java.sun.com/jsf/html"
                     xmlns:f="http://java.sun.com/jsf/core"
                     xmlns:ui="http://java.sun.com/jsf/facelets"
-                    xmlns:c="http://java.sun.com/jsp/jstl/core"
-                    xmlns:sec="http://www.springframework.org/security/facelets/tags">
+                    xmlns:c="http://java.sun.com/jsp/jstl/core">
         
-    <ui:define name="title">#{msgs['page.login']}</ui:define>
+    <ui:define name="title">Přihlášení</ui:define>
     <ui:define name="content">
-        <h1>#{msgs['page.login']}</h1>
+        <h1>Přihlášení</h1>
         <div class="row">
             <div class="span6">
-                <sec:isAnonymous>
+                <c:if test="#{empty user.user}">
+                <!--<sec:isAnonymous>-->
                 <p class="lead">Přihlašte se pomocí svého uživatelského jména a hesla. <a href="#">Zapomněli jste heslo?</a></p>
-                <span style="color:red;">#{sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</span>
-                    <form class="form-horizontal" action="/wpa-forum/j_spring_security_check" method="POST">
+                    <h:form class="form-horizontal" action="/wpa-forum/j_spring_security_check" method="POST">
                     <div class="control-group">
-                        <label class="control-label" for="j_username">#{msgs['page.register.form.username']}</label>
+                        <label class="control-label">Email</label>
                         <div class="controls">
-                            <input type="text" name="j_username" />
+                            <h:inputText type="text" value="#{login.email}" placeholder="email" />
                         </div>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="j_password">#{msgs['page.register.form.password']}</label>
+                        <label class="control-label">Heslo</label>
                         <div class="controls">
-                            <input type="password" name="j_password" />
+                            <h:inputText type="password" value="#{login.password}" />
                         </div>
                     </div>
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-primary">#{msgs['page.login.form.submitBtn']}</button>
-                            <button type="reset" class="btn">#{msgs['page.login.form.cancelBtn']}</button>
+                            <h:commandButton class="btn" action="#{login.login}" value="Přihlásit"/>
+                            <button type="reset" class="btn">Reset</button>
                         </div>
                     </div>
-                </form>
-                </sec:isAnonymous>
-                <sec:isAuthenticated>Již jste přihlášeni!</sec:isAuthenticated>
+                </h:form>
+                <!--</sec:isAnonymous>-->
+                </c:if>
+                <c:if test="#{not empty user.user}">
+                <!--<sec:isAuthenticated>-->
+                    Již jste přihlášeni!
+                <!--</sec:isAuthenticated>-->
+                </c:if>
 
                 <!--
                 <h:form  prependId="false" class="form-horizontal form-register">
                 <div class="control-group">
-                    <h:outputLabel class="control-label" value="#{msgs['page.register.form.username']}" for="j_username" />
+                    <h:outputLabel class="control-label" value="Usernmae" for="j_username" />
                     <div class="controls">
                         <h:inputText id="j_username" binding="#{username}" required="true" requiredMessage="#{msgs['page.register.form.required']}">
                             <f:validateLength maximum="60" />

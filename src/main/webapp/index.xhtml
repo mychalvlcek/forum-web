@@ -8,9 +8,6 @@
 
     <ui:define name="title">Hlavní stránka</ui:define>
     <ui:define name="content">
-        <h:form rendered="#{!init.isInit}">
-            <h1><h:commandLink action="#{init.init}" value="Init databázových dat!" /></h1>
-        </h:form>
         <!-- category -->
         <ui:repeat value="#{helloBean.getCategories()}" var="cat">
             <div class="media category-block">

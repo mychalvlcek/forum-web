@@ -11,6 +11,7 @@ import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -25,6 +26,9 @@ public class NewTopic {
 
     private CategoryService categoryService;
     private TopicService topicService;
+
+    @ManagedProperty(value = "#{user}")
+    LoggedUser user;
 
     @PostConstruct
     public void postConstruct() {
@@ -47,7 +51,7 @@ public class NewTopic {
 
         TopicDTO rec = new TopicDTO();
         rec.setTitle(title);
-        rec.setAuthor(6L);
+        rec.setAuthor(user.getId());
         rec.setCategory(categoryId);
         topicService.save(rec);
 
@@ -77,6 +81,14 @@ public class NewTopic {
 
     public void setCategory(CategoryDTO category) {
         this.category = category;
+    }
+
+    public LoggedUser getUser() {
+        return user;
+    }
+
+    public void setUser(LoggedUser user) {
+        this.user = user;
     }
 
 }

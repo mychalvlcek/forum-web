@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class AbstractDTO implements Serializable {
     protected Long id;
-//    protected Date created;
-//    protected Date updated;
+    protected Date created;
+    protected Date updated;
 
     public Long getId() {
         return id;

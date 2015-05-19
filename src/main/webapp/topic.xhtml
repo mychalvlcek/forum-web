@@ -35,8 +35,10 @@
                     <h:outputText value="Zpět k výpisu témat" />
                 </h:outputLink>
                 <!--<sec:isAuthenticated>-->
+                <c:if test="#{not empty user.user}">
                 <a href="#reply" class="btn"><i class="icon-share-alt"></i> Odpovědět</a>
                 <!--</sec:isAuthenticated>-->
+                </c:if>
             </div>
             <div class="btn-group pull-right">
                 <button class="btn" rel="tooltip" title="Přejít na stranu: 1">1</button>
@@ -55,6 +57,7 @@
             <div class="media post-block" id="post">
                 <!-- akce -->
                 <!--<sec:isAuthenticated>-->
+                <c:if test="#{not empty user.user}">
                 <h:form styleClass="admin-block" rendered="#{loggedUser.id() == post.author.id || loggedUser.id() == 3}">
                     <div class="btn-group pull-right actions">
                         <button class="btn btn-info dropdown-toggle" data-toggle="dropdown">Akce <span class="caret"></span></button>
@@ -70,6 +73,7 @@
                     </div>
                 </h:form>
                 <!--</sec:isAuthenticated>-->
+                </c:if>
                 <div class="label-block">
                     <h:outputLink value="/profile.xhtml" title="#{post.author.username}'s profile" styleClass="username">
                         <f:param name="id" value="#{post.author.id}" />
@@ -77,13 +81,13 @@
                     </h:outputLink>
                     <span class="posted">
                         <em>
-                            <h:outputText value="#{post.created}" >
+                            <h:outputText value="#{post.id}" >
                                 <f:convertDateTime pattern="dd.MM. yyyy, HH:mm" />
                             </h:outputText>
                             <!-- naposledy upraveno -->
-                            <ui:fragment rendered="#{post.created != post.updated}">
+                            <ui:fragment rendered="#{post.id != post.id}">
                                 upraveno
-                                <h:outputText value="#{post.updated}" >
+                                <h:outputText value="#{post.id}" >
                                     <f:convertDateTime pattern="dd.MM. yyyy, HH:mm" />
                                 </h:outputText>
                             </ui:fragment>
@@ -97,8 +101,10 @@
                     </h:outputLink>
                     <span class="label label-success status">ON-LINE</span><br />
                     <!--<sec:isAuthenticated>-->
+                    <c:if test="#{not empty user.user}">
                     <a href="#myModal" data-toggle="modal" data-target="#myModal" rel="tooltip" title="Nová zpráva" data-placement="right"><i class="icon-envelope"></i></a>
                     <!--</sec:isAuthenticated>-->
+                    </c:if>
                 </div>
                 <div class="media-body">
                     <h4 class="media-heading">#{post.title}</h4>
@@ -108,6 +114,7 @@
         </ui:repeat>
         <!-- end post -->
         <!--<sec:isAuthenticated>-->
+        <c:if test="#{not empty user.user}">
         <!-- new message - Modal -->
         <div id="myModal" class="modal hide fade new-message" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-header">
@@ -152,6 +159,7 @@
             </div>
         </h:form>
     <!--</sec:isAuthenticated>-->
+        </c:if>
     <ui:fragment rendered="#{not empty topic.posts}">
         <hr />
         <div class="btn-toolbar">

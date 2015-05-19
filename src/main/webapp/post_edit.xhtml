@@ -19,6 +19,7 @@
         <!-- new post -->
         <a name="reply"></a>
         <!--<sec:isAuthenticated>-->
+        <c:if test="#{not empty user.user}">
         <h:form>
         <div class="media post-block" id="new-post">
             <div class="label-block">
@@ -44,5 +45,6 @@
         </div>
         </h:form>
         <!--</sec:isAuthenticated>-->
+        </c:if>
     </ui:define>
 </ui:composition>

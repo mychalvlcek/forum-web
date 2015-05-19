@@ -17,6 +17,7 @@
         <h1>Vytvoření nového tématu - #{newTopic.category.title}</h1>
         <!-- new topic -->
         <!--<sec:isAuthenticated>-->
+        <c:if test="#{not empty user.user}">
         <h:form>
         <h:outputLink value="/category.xhtml">
             <f:param name="id" value="#{newTopic.categoryId}" />
@@ -48,5 +49,6 @@
         </div>
         </h:form>
         <!--</sec:isAuthenticated>-->
+        </c:if>
     </ui:define>
 </ui:composition>

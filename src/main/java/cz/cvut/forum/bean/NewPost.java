@@ -5,6 +5,7 @@ import cz.cvut.forum.service.*;
 import java.io.IOException;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean
@@ -20,6 +21,9 @@ public class NewPost {
 
     private PostService postService;
     private TopicService topicService;
+
+    @ManagedProperty(value = "#{user}")
+    LoggedUser user;
 
     @PostConstruct
     public void postConstruct() {
@@ -42,7 +46,7 @@ public class NewPost {
         PostDTO rec = new PostDTO();
         rec.setTitle(title);
         rec.setContent(content);
-        rec.setAuthor(6L);
+        rec.setAuthor(user.getId());
         rec.setTopicId(topicId);
 
         postService.save(rec);
@@ -86,6 +90,14 @@ public class NewPost {
 
     public void setPost(PostDTO post) {
         this.post = post;
+    }
+
+    public LoggedUser getUser() {
+        return user;
+    }
+
+    public void setUser(LoggedUser user) {
+        this.user = user;
     }
 
 }

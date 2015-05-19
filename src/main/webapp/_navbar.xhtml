@@ -2,7 +2,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jstl/core">
     
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="navbar-inner">
@@ -15,34 +16,42 @@
                 <h:link class="brand" outcome="index" value="forum" />
                 <div class="nav-collapse collapse">
                     <!--<sec:isAnonymous>-->
-                        <form class="navbar-form pull-right" action="/wpa-forum/j_spring_security_check" method="post">
-                            <input class="span2" type="text" name="j_username" placeholder="email" />
-                            <input class="span2" type="password" name="j_password" placeholder="password" />
-                            <button type="submit" class="btn">Login</button>
-                        </form>
+                    <c:if test="#{empty user.user}">
+                        <h:form class="navbar-form pull-right" action="/wpa-forum/j_spring_security_check" method="post">
+                            <h:inputText class="span2" type="text" value="#{login.email}" placeholder="email" />
+                            <h:inputText class="span2" type="password" value="#{login.password}" placeholder="password" />
+                            <h:commandButton class="btn" action="#{login.login}" value="Odeslat"/>
+                        </h:form>
                         <ul class="nav pull-right">
                             <li><h:link outcome="registration.xhtml" title="Registrační formulář" value="Register"/></li>
                         </ul>
                     <!--</sec:isAnonymous>-->
+                    </c:if>
                     <!--<sec:isAuthenticated>-->
-                        <!--<ul class="nav pull-right">-->
-                            <!--<li class="divider-vertical"></li>-->
-                            <!--<li class="dropdown">-->
-                                <!--<a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msgs['navbar.logged_as']} #{loggedUser.username()} <b class="caret"></b></a>-->
-                                <!--<ul class="dropdown-menu">-->
-                                    <!--<li>-->
-                                        <!--<h:link outcome="profile" value="#{msgs['navbar.profile']}">-->
-                                            <!--<f:param name="id" value="#{loggedUser.id()}" />-->
-                                        <!--</h:link>-->
-                                    <!--</li>-->
-                                    <!--<li class="divider"></li>-->
-                                    <!--<li><a href="/wpa-forum/j_spring_security_logout">#{msgs['navbar.logout']}</a></li>-->
-                                <!--</ul>-->
-                            <!--</li>-->
-                        <!--</ul>-->
+                    <c:if test="#{not empty user.user}">
+                        <ul class="nav pull-right">
+                            <li class="divider-vertical"></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{user.username} <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <h:link outcome="profile" value="Profil">
+                                            <f:param name="id" value="#{user.id}" />
+                                        </h:link>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <h:form>
+                                        <h:commandLink immediate="true" href="/wpa-forum/j_spring_security_logout" action="#{login.logout}"  value="Odhlásit"/>
+                                        </h:form>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
                         <!--<form class="navbar-search pull-right" action="">-->
                             <!--<input type="text" class="search-query span2" placeholder="#{msgs['navbar.search']}" />-->
                         <!--</form>-->
+                    </c:if>
                     <!--</sec:isAuthenticated>-->
                 </div>
             </div>

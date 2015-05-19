@@ -1,14 +1,21 @@
 package cz.cvut.forum.dto;
 
+import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 public class UserDTO extends AbstractDTO {
     private String username;
     private String email;
+    private String password;
+    @XmlTransient
     private List<Long> messages;
+    @XmlTransient
     private List<Long> posts;
+    @XmlTransient
     private List<Long> topics;
+    @XmlTransient
     private List<Long> roles;
 
     public UserDTO() {
@@ -24,6 +31,14 @@ public class UserDTO extends AbstractDTO {
         this.roles = roles;
 //        this.created = created;
 //        this.updated = updated;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUsername() {
@@ -74,6 +89,7 @@ public class UserDTO extends AbstractDTO {
         this.roles = roles;
     }
 
+    @XmlTransient
     public int getPostsCount() {
         return this.posts.size();
     }
