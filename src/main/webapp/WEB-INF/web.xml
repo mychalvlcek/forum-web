@@ -34,4 +34,14 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+
+    <!-- messaging -->
+    <servlet>
+        <servlet-name>Messaging Servlet</servlet-name>
+        <servlet-class>org.primefaces.push.PushServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Messaging Servlet</servlet-name>
+        <url-pattern>/primepush/*</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -37,7 +37,10 @@
     <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet.jsp:jsp-api:2.2" level="project" />
-    <orderEntry type="library" name="Maven: org.primefaces:primefaces:3.4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.primefaces:primefaces:5.1" level="project" />
+    <orderEntry type="library" name="Maven: org.atmosphere:atmosphere-runtime:2.2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
     <orderEntry type="library" name="Maven: javax.ws.rs:jsr311-api:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-client:1.14" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-core:1.14" level="project" />
@@ -53,6 +56,8 @@
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-jaxrs:1.9.2" level="project" />
     <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-xc:1.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.owlike:genson:1.1" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" name="Maven: com.rabbitmq:amqp-client:3.5.2" level="project" />
   </component>
 </module>
 
