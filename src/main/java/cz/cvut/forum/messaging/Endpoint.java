@@ -20,7 +20,14 @@ public abstract class Endpoint {
         connection = factory.newConnection();
         channel = connection.createChannel();
 
-        channel.queueDeclare(queueName, false, false, false, null);
+
+        channel.exchangeDeclare("logs", "fanout");
+        String queue = channel.queueDeclare().getQueue();
+        this.queueName = queue;
+        channel.queueBind(queue, "logs", "");
+
+
+//        channel.queueDeclare(queueName, false, false, false, null);
     }
 
 
