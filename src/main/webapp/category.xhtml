@@ -21,7 +21,7 @@
         <!-- bread nav -->
         <ul class="breadcrumb">
             <li><a href="/">home</a> <span class="divider">/</span></li>
-            <li class="active">#{categoryBean   .category.title}</li>
+            <li class="active">#{categoryBean.category.title}</li>
         </ul>
         <!-- nav -->
         <div class="btn-toolbar">
@@ -43,7 +43,7 @@
                 <button class="btn">3</button>
             </div>
         </div>
-        <hr />
+        <hr id="divider" />
         <ui:fragment rendered="#{empty categoryBean.topics}">
             <p class="lead muted no-records">Nebyla nalezena žádná témata pro tuto kategorii.</p>
         </ui:fragment>
@@ -83,6 +83,33 @@
                 </div>
             </div>
         </ui:repeat>
+
+        <!--template-->
+        <div data-category="#{categoryBean.id}" class="media topic-block item-template" style="display: none;">
+            <div class="type-block">
+                <span class="type"><i class="icon-list-alt"></i></span>
+            </div>
+            <div class="media-body">
+                <!-- nazev -->
+                <h4 class="media-heading">
+                    <a href="/topic.xhtml?id=">nazev</a>
+                </h4>
+                <!-- info -->
+                <div class="topic-info">
+                    <h:outputLink value="/profile.xhtml" title="vlcekmi3's profile" styleClass="last-post-username">
+                        <f:param name="id" value="6" />
+                        <h:graphicImage class="media-object img-rounded pull-right" width="35" url="/resources/images/avatar.jpg" alt="username's avatar" />
+                    </h:outputLink>
+                        <span rel="tooltip" title="Datum vytvoření" data-placement="left">
+                            01.01. 1970, 00:00
+                        </span><br />
+                        <span>
+                            <a href="/profile.xhtml?id=" class="last-post-username">vlcekmi3</a>
+                        </span>
+                </div>
+                <span class="pull-right replies">0 odpovědí</span>
+            </div>
+        </div>
         <!-- end topic -->
         <ui:fragment rendered="#{not empty category.topics}">
             <hr />

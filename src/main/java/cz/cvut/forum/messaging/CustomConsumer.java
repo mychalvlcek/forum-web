@@ -6,6 +6,7 @@ import java.util.Map;
 
 import cz.cvut.forum.bean.LoggedUser;
 import cz.cvut.forum.dto.CategoryDTO;
+import cz.cvut.forum.dto.TopicDTO;
 import cz.cvut.forum.service.*;
 import org.apache.commons.lang.SerializationUtils;
 
@@ -36,11 +37,11 @@ public class CustomConsumer extends Endpoint implements Runnable, Consumer {
         super("queue");
     }
 
-    private CategoryService service;
+    private TopicService service;
 
     @PostConstruct
     public void init() {
-        this.service = new CategoryServiceImpl();
+        this.service = new TopicServiceImpl();
         this.run();
     }
 
@@ -68,11 +69,12 @@ public class CustomConsumer extends Endpoint implements Runnable, Consumer {
     public void handleDelivery(String consumerTag, Envelope env, BasicProperties props, byte[] body) throws IOException {
         Long id = (Long) SerializationUtils.deserialize(body);
 
-        CategoryDTO cat = service.get(id);
+        TopicDTO topic = service.get(id);
 
         EventBus eventBus = EventBusFactory.getDefault().eventBus();
 //        eventBus.publish("/actions", message);
-        eventBus.publish("/actions", new FacesMessage("Vytvořena kategorie!", cat.getTitle()));
+//        eventBus.publish("/actions", new FacesMessage("Vytvořeno vlákno!", topic.getTitle()));
+        eventBus.publish("/actions", topic);
 
     }
 

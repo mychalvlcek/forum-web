@@ -10,7 +10,7 @@
         <f:facet name="first">
             <meta charset="utf-8"/>
             
-            <title><ui:insert name="title">#{msgs['application.name']}</ui:insert> - #{msgs['application.name']}</title>
+            <title><ui:insert name="title">forum</ui:insert> - forum</title>
             
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <meta name="description" content="" />
@@ -29,10 +29,17 @@
 
         <script type="text/javascript">
             function handleMessage(data) {
-                data.severity = 'info';
-                PF('growl').renderMessage(data);
+                PF('growl').renderMessage({"summary":"Byl vytvořen nový topic", "detail":data.title, "severity":"info"});
 
-//                PF('growl').renderMessage({"summary":data, "detail":data, "severity":"info"})
+                if ($('.item-template').length > 0 &amp;&amp; data.category == $('.item-template').data('category')) {
+                    var $newItem = $($('.item-template').clone()).removeClass('item-template');
+                    $newItem.css('display', 'block');
+                    $newItem.css('background', '#ffef97');
+                    $newItem.find('.media-heading a').attr('href', '/topic.xhtml?id=' + data.id);
+                    $newItem.find('.media-heading a').html(data.title);
+                    //
+                    $('#divider').after($newItem);
+                }
             }
         </script>
     </h:head>
